@@ -4,7 +4,10 @@ import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
-import { typeDefs, resolvers } from './graphql/schema'; // Adjust the import path as needed
+import typeDefs from './schemas/typeDefs'; 
+import resolvers from './schemas/resolvers';
+
+// Adjust the import path as needed
 
 dotenv.config();
 
@@ -35,7 +38,7 @@ if (process.env.PORT) {
   const __dirname = path.dirname(new URL(import.meta.url).pathname);
   app.use(express.static(path.join(__dirname, '../client/build')));
 
-  app.get('*', (req, res) => {
+  app.get('*', (_, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
   });
 }
